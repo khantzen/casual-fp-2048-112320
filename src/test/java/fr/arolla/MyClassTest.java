@@ -14,4 +14,5 @@ public class MyClassTest {
 
         assertThat(result).isEqualTo(1);
     }
+
 }
