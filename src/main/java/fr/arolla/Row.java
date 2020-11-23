@@ -1,10 +1,10 @@
 package fr.arolla;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Row {
 
@@ -26,16 +26,34 @@ public class Row {
     }
 
     public Row right() {
-        List<Integer> newValues = IntStream.concat(
-                Arrays.stream(values).filter(x -> x == 0),
-                Arrays.stream(values).filter(x -> x != 0)
-        ).boxed().collect(Collectors.toList());
+        List<Integer> newValues = Arrays.stream(values)
+                .filter(x -> x != 0)
+                .boxed()
+                .collect(Collectors.toList());
 
-        for (int i = 0; i < newValues.size(); i++) {
-
+        Collections.reverse(newValues);
+        newValues.add(0,0);
+        List<Integer> mergedValues = new ArrayList<>();
+        if (newValues.size() == 1) {
+            mergedValues = newValues;
+        } else {
+            for (int i = 1; i < newValues.size(); i++) {
+                if (newValues.get(i).equals(newValues.get(i - 1))) {
+                    mergedValues.add(newValues.get(i) + newValues.get(i - 1));
+                    i++;
+                } else {
+                    mergedValues.add(newValues.get(i));
+                }
+            }
+        }
+        int zeroesToAdd = values.length - mergedValues.size();
+        for (int i = 0; i < zeroesToAdd; i++) {
+            mergedValues.add(0);
         }
 
-        return new Row(newValues.stream().map(String::valueOf).collect(Collectors.joining(",")));
+        Collections.reverse(mergedValues);
+
+        return new Row(mergedValues.stream().map(String::valueOf).collect(Collectors.joining(",")));
     }
 
     @Override
