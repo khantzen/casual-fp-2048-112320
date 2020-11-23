@@ -15,4 +15,14 @@ public class Grid {
         this.cells[0][0] = 0;
         this.cells[1][0] = 2;
     }
+
+    public static class Builder {
+        public Builder appendRow(String row) {
+            return this;
+        }
+
+        public Grid build() {
+            return new Grid(2);
+        }
+    }
 }
