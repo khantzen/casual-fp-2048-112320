@@ -20,5 +20,16 @@ public class RowTest {
         Assertions.assertThat(right).isEqualTo(new Row(rowExpectedContent));
     }
 
+    @ParameterizedTest
+    @CsvSource(delimiter = '|', value =
+            {
+                    "4,4,0|0,0,8"
+            })
+    void move_right_with_merge(String rowContent, String rowExpectedContent) {
+        Row row = new Row(rowContent);
+        Row right = row.right();
+        Assertions.assertThat(right).isEqualTo(new Row(rowExpectedContent));
+    }
+
 
 }

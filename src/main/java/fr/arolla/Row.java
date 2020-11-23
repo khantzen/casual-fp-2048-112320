@@ -1,6 +1,10 @@
 package fr.arolla;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Row {
 
@@ -22,21 +26,16 @@ public class Row {
     }
 
     public Row right() {
-        int lineLength = values.length;
-        int[] nextValues = new int[lineLength];
-        long zeroes = Arrays.stream(values).filter(x -> x == 0).count();
-        int counter = 0;
-        for (int i = values.length - 1; i >= 0; i--) {
-            int value = values[i];
-            if (value != 0) {
-                nextValues[lineLength - counter - 1] = value;
-                ++counter;
-            }
+        List<Integer> newValues = IntStream.concat(
+                Arrays.stream(values).filter(x -> x == 0),
+                Arrays.stream(values).filter(x -> x != 0)
+        ).boxed().collect(Collectors.toList());
+
+        for (int i = 0; i < newValues.size(); i++) {
+
         }
-        for (int i = 0; i < zeroes; i++) {
-            nextValues[i] = 0;
-        }
-        return new Row(Arrays.toString(nextValues).replaceAll("\\[|]", ""));
+
+        return new Row(newValues.stream().map(String::valueOf).collect(Collectors.joining(",")));
     }
 
     @Override
