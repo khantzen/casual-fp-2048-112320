@@ -56,6 +56,22 @@ public class Game2048Test {
         assertThat(grid.cells[1][1]).isEqualTo(0);
     }
 
+    @Test
+    void should_down_2_cells() {
+        var grid = new Grid.Builder()
+                .appendRow("1,2")
+                .appendRow("0,0")
+                .build();
+
+        grid.down();
+
+        var expectedGrid = new Grid.Builder()
+                .appendRow("0,0")
+                .appendRow("1,2")
+                .build();
+
+        assertThat(grid).isEqualTo(expectedGrid);
+    }
 
     Grid given_a_grid_with_cell_first_cell_filled(int size) {
         return new Grid

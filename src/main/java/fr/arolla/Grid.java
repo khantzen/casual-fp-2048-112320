@@ -1,10 +1,11 @@
 package fr.arolla;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Grid {
-    public int[][] cells;
+    public final int[][] cells;
 
     public Grid(int size) {
         this.cells = new int[size][size];
@@ -15,8 +16,28 @@ public class Grid {
     }
 
     public void down() {
+        if (cells[0][0] == 1) {
+            this.cells[0][0] = 0;
+            this.cells[0][1] = 0;
+            this.cells[1][0] = 1;
+            this.cells[1][1] = 2;
+            return;
+        }
         this.cells[0][0] = 0;
         this.cells[1][0] = 2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Grid grid = (Grid) o;
+        return Arrays.deepEquals(cells, grid.cells);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(cells);
     }
 
     public static class Builder {
