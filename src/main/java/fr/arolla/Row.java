@@ -32,14 +32,13 @@ public class Row {
                 .collect(Collectors.toList());
 
         Collections.reverse(newValues);
-        newValues.add(0,0);
         List<Integer> mergedValues = new ArrayList<>();
         if (newValues.size() == 1) {
             mergedValues = newValues;
         } else {
-            for (int i = 1; i < newValues.size(); i++) {
-                if (newValues.get(i).equals(newValues.get(i - 1))) {
-                    mergedValues.add(newValues.get(i) + newValues.get(i - 1));
+            for (int i = 0; i < newValues.size(); i++) {
+                if (i!= newValues.size() - 1 && newValues.get(i).equals(newValues.get(i + 1))) {
+                    mergedValues.add(newValues.get(i) * 2);
                     i++;
                 } else {
                     mergedValues.add(newValues.get(i));
